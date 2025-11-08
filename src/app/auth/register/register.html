@@ -1,0 +1,55 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <h2>Crear Cuenta</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <!-- Nombre -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" type="text" placeholder="Tu nombre">
+      </mat-form-field>
+
+      <!-- Apellidos -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Apellidos</mat-label>
+        <input matInput formControlName="lastname" type="text" placeholder="Tus apellidos">
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="ejemplo@correo.com">
+      </mat-form-field>
+
+      <!-- Contraseña -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" type="password" placeholder="********">
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" class="full-width" type="submit">
+        Registrarse
+      </button>
+    </form>
+
+    <p class="divider">o registrarse con</p>
+
+    <button mat-stroked-button color="primary" class="google-btn full-width" (click)="registerWithGoogle()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8
+          c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12
+          c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657
+          C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24
+          c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20
+          C44,22.659,43.862,21.35,43.611,20.083z"></path>
+      </svg>
+      <span>Google</span>
+    </button>
+
+    <div class="auth-links">
+      <p>¿Ya tienes una cuenta? <a (click)="goToLogin()">Inicia sesión aquí</a></p>
+    </div>
+  </mat-card>
+</div>

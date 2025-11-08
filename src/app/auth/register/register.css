@@ -1,0 +1,59 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #0085FF, #003465);
+}
+
+.auth-card {
+  width: 350px;
+  padding: 25px;
+  text-align: center;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.auth-links {
+  margin-top: 15px;
+}
+
+.auth-links a {
+  color: #0085FF;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  margin: 15px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.google-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.google-icon {
+  width: 18px;
+  height: 18px;
+}

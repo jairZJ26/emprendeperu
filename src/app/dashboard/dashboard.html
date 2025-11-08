@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <span class="title">Emprende Perú</span>
+  <span class="spacer"></span>
+
+  <!-- Avatar circular que abre el perfil -->
+  <button mat-icon-button [routerLink]="'/profile'">
+    <img [src]="userPhoto" alt="Perfil" class="avatar">
+  </button>
+</mat-toolbar>
+
+<!-- Contenido del dashboard -->
+<div class="dashboard-content">
+  <app-chatbot></app-chatbot>
+</div>

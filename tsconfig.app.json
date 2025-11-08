@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": ["node"],
+    "moduleResolution": "bundler",         // ✅ Reemplaza "node" → corrige el error TS5098
+    "module": "ESNext",                    // ✅ Consistencia con el tsconfig principal
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@environments/*": ["src/environments/*"],
+      "@assets/*": ["src/assets/*"],
+      "@models/*": ["src/app/models/*"]
+    },
+    "allowSyntheticDefaultImports": true,  // ✅ Para compatibilidad moderna
+    "esModuleInterop": true                // ✅ Evita errores con imports de librerías comunes
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/test.ts"
+  ]
+}

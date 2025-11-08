@@ -1,0 +1,98 @@
+<div class="profile-container">
+  <mat-card class="profile-card">
+    <div class="header">
+      <div class="user-info">
+        <img [src]="photoPreview" alt="Foto de perfil" class="foto-preview" />
+        <div>
+          <h2>{{ profileForm.get('nombre')?.value }} {{ profileForm.get('apellidos')?.value }}</h2>
+          <p>{{ profileForm.get('email')?.value }}</p>
+        </div>
+      </div>
+
+      <div class="button-group">
+  <button mat-raised-button class="btn-secondary" (click)="goToDashboard()">
+    ⬅ Volver
+  </button>
+
+  <button mat-raised-button color="warn" class="btn-secondary" (click)="logout()">
+    🚪 Cerrar sesión
+  </button>
+</div>
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="form-section">
+      <h3>Datos Personales</h3>
+      <div class="two-columns">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apellidos</mat-label>
+          <input matInput formControlName="apellidos" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>DNI</mat-label>
+          <input matInput formControlName="dni" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Edad</mat-label>
+          <input matInput type="number" formControlName="edad" />
+        </mat-form-field>
+      </div>
+
+      <h3>Datos del Negocio</h3>
+      <div formGroupName="negocio" class="two-columns">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre del Negocio</mat-label>
+          <input matInput formControlName="nombreNegocio" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Rubro</mat-label>
+          <input matInput formControlName="rubro" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Departamento</mat-label>
+          <input matInput formControlName="departamento" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Provincia</mat-label>
+          <input matInput formControlName="provincia" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Distrito</mat-label>
+          <input matInput formControlName="distrito" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ubigeo</mat-label>
+          <input matInput formControlName="ubigeo" />
+        </mat-form-field>
+      </div>
+
+      <h3>Visión y Misión</h3>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Visión</mat-label>
+        <textarea matInput formControlName="vision" rows="3"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Misión</mat-label>
+        <textarea matInput formControlName="mision" rows="3"></textarea>
+      </mat-form-field>
+
+      <div class="btn-save">
+        <button mat-flat-button color="primary" type="submit">
+          💾 Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
