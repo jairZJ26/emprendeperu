@@ -43,6 +43,6 @@ __screenshots__/
 Thumbs.db
 
 # Ignorar archivos de entorno
-#.env
-#/backend/.env
+.env
+/backend/.env
 
