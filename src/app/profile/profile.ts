@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
+import { Auth, signOut } from '@angular/fire/auth';
 import { UserService, UserProfile } from '../services/user';
-import { signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-profile',
@@ -29,13 +28,17 @@ export class ProfileComponent implements OnInit {
   photoPreview: string | ArrayBuffer | null = 'assets/default-avatar.png';
   userExists = false;
   userEmail: string | null = null;
+  isBrowser = false;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+
     this.profileForm = this.fb.group({
       foto: [''],
       nombre: [{ value: '', disabled: true }, Validators.required],
@@ -59,17 +62,18 @@ export class ProfileComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    if (!this.isBrowser) return; // Evita ejecutar en SSR
+
     const user = this.auth.currentUser;
 
     if (!user?.email) {
-      window.alert('⚠️ No hay sesión activa. Por favor inicia sesión.');
+      alert('⚠️ No hay sesión activa. Por favor inicia sesión.');
       this.router.navigate(['/login']);
       return;
     }
 
     this.userEmail = user.email;
 
-    // 🔹 Cargar datos desde localStorage primero
     const storedData = JSON.parse(localStorage.getItem('userData') || '{}');
     const baseData = {
       nombre: storedData.nombre || user.displayName?.split(' ')[0] || '',
@@ -78,7 +82,6 @@ export class ProfileComponent implements OnInit {
     };
     this.profileForm.patchValue(baseData);
 
-    // 🔹 Luego buscar desde MySQL
     this.loadUserFromMySQL(user.email, baseData);
   }
 
@@ -100,41 +103,55 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: Event): void { const fileInput = event.target as HTMLInputElement; if (fileInput?.files && fileInput.files.length > 0) { const file = fileInput.files[0]; this.profileForm.patchValue({ foto: file.name }); const reader = new FileReader(); reader.onload = () => (this.photoPreview = reader.result); reader.readAsDataURL(file); } }
+  onFileSelected(event: Event): void {
+    if (!this.isBrowser) return;
+
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput?.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      this.profileForm.patchValue({ foto: file.name });
+
+      const reader = new FileReader();
+      reader.onload = () => (this.photoPreview = reader.result);
+      reader.readAsDataURL(file);
+    }
+  }
 
   onSubmit(): void {
+    if (!this.isBrowser) return;
+
     const formData: UserProfile = this.profileForm.getRawValue();
 
     if (!this.userEmail) {
-      window.alert('❌ No se pudo identificar el usuario.');
+      alert('❌ No se pudo identificar el usuario.');
       return;
     }
 
     if (this.profileForm.valid) {
       this.userService.updateUserByEmail(this.userEmail, formData).subscribe({
-        next: () => window.alert('✅ Perfil actualizado correctamente'),
+        next: () => alert('✅ Perfil actualizado correctamente'),
         error: (err) => console.error('❌ Error al actualizar perfil:', err)
       });
 
       localStorage.setItem('userData', JSON.stringify(formData));
     } else {
-      window.alert('⚠️ Por favor completa los campos obligatorios');
+      alert('⚠️ Por favor completa los campos obligatorios');
     }
   }
 
   goToDashboard(): void {
-    this.router.navigate(['/dashboard']);
+    if (this.isBrowser) this.router.navigate(['/dashboard']);
   }
 
   async logout() {
-  try {
-    await signOut(this.auth);
-    localStorage.clear();
-    this.router.navigate(['/login']);
-  } catch (error) {
-    console.error('❌ Error al cerrar sesión:', error);
+    if (!this.isBrowser) return;
+
+    try {
+      await signOut(this.auth);
+      localStorage.clear();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('❌ Error al cerrar sesión:', error);
+    }
   }
-}
-
-
 }
