@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface UserProfile {
   id?: number;
@@ -29,7 +30,7 @@ export interface UserProfile {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/api/users'; // ⚙️ Ajusta al endpoint de tu backend
+  private apiUrl = `${environment.BACKEND_URL}/api/users`;
 
   constructor(private http: HttpClient) {}
 

@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
     apiKey: "AIzaSyA06ch1nqKy0zNY2w-StMhswA89049wjsc",
     authDomain: "plataforma-web-1ca20.firebaseapp.com",
@@ -8,5 +8,5 @@ export const environment = {
     messagingSenderId: "321343852589",
     appId: "1:321343852589:web:0c47674e345a56fbb068a4"
   },
-  BACKEND_URL: 'http://localhost:3000' // 👉 para desarrollo local
+  BACKEND_URL: 'https://emprendeperu-backend.onrender.com' // 👉 URL de tu backend en Render
 };
