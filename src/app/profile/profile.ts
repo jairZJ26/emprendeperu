@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
     const user = this.auth.currentUser;
 
     if (!user?.email) {
-      alert('⚠️ No hay sesión activa. Por favor inicia sesión.');
+      window.alert('⚠️ No hay sesión activa. Por favor inicia sesión.');
       this.router.navigate(['/login']);
       return;
     }
@@ -106,19 +106,19 @@ export class ProfileComponent implements OnInit {
     const formData: UserProfile = this.profileForm.getRawValue();
 
     if (!this.userEmail) {
-      alert('❌ No se pudo identificar el usuario.');
+      window.alert('❌ No se pudo identificar el usuario.');
       return;
     }
 
     if (this.profileForm.valid) {
       this.userService.updateUserByEmail(this.userEmail, formData).subscribe({
-        next: () => alert('✅ Perfil actualizado correctamente'),
+        next: () => window.alert('✅ Perfil actualizado correctamente'),
         error: (err) => console.error('❌ Error al actualizar perfil:', err)
       });
 
       localStorage.setItem('userData', JSON.stringify(formData));
     } else {
-      alert('⚠️ Por favor completa los campos obligatorios');
+      window.alert('⚠️ Por favor completa los campos obligatorios');
     }
   }
 
